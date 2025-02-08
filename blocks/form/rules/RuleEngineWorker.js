@@ -17,8 +17,9 @@
  * Adobe permits you to use and modify this file solely in accordance with
  * the terms of the Adobe license agreement accompanying it.
  ************************************************************************ */
-import { createFormInstance } from './model/afb-runtime.js';
-import registerCustomFunctions from './functionRegistration.js';
+/* eslint-disable no-console */
+import { createFormInstance } from "./model/afb-runtime.js";
+import registerCustomFunctions from "./functionRegistration.js";
 
 let customFunctionRegistered = false;
 
@@ -38,12 +39,12 @@ let ruleEngine;
 onmessage = (e) => {
   function handleMessageEvent(event) {
     switch (event.data.name) {
-      case 'init':
+      case "init":
         ruleEngine = new RuleEngine(event.data.payload);
         // eslint-disable-next-line no-case-declarations
         const state = ruleEngine.getState();
         postMessage({
-          name: 'init',
+          name: "init",
           payload: state,
         });
         ruleEngine.dispatch = (msg) => {

@@ -1,5 +1,6 @@
-const textIntersectionClass = 'tnc__text-intersect';
-const textDecorationClass = 'tnc__text-decoration';
+/* eslint-disable no-console */
+const textIntersectionClass = "tnc__text-intersect";
+const textDecorationClass = "tnc__text-decoration";
 
 class TermsAndConditions {
   constructor(fieldDiv, fieldJson) {
@@ -18,32 +19,40 @@ class TermsAndConditions {
   }
 
   decorate() {
-    const textWrapper = this.fieldDiv.querySelector('.plain-text-wrapper');
-    if (!textWrapper) { // rendition does not have a plain-text-wrapper => link rendition of TnC
-      console.debug('No plain-text found in TnC field. Assuming Link based rendition and Skipping decoration.');
+    const textWrapper = this.fieldDiv.querySelector(".plain-text-wrapper");
+    if (!textWrapper) {
+      // rendition does not have a plain-text-wrapper => link rendition of TnC
+      console.debug(
+        "No plain-text found in TnC field. Assuming Link based rendition and Skipping decoration."
+      );
       return;
     }
     textWrapper.classList.add(textDecorationClass);
-    const intersection = document.createElement('div');
+    const intersection = document.createElement("div");
     intersection.classList.add(textIntersectionClass);
     textWrapper.appendChild(intersection);
     this.handleScroll();
   }
 
   handleScroll() {
-    const intersection = this.fieldDiv.querySelector(`.${textIntersectionClass}`);
+    const intersection = this.fieldDiv.querySelector(
+      `.${textIntersectionClass}`
+    );
     if (intersection) {
-      const io = new IntersectionObserver(([{ isIntersecting }]) => {
-        if (isIntersecting) {
-          /*
-          * TODO: Enable the checkboxes that are disabled by default via the model.
-          *  Currently they are enabled by default
-          * */
-          io.unobserve(intersection);
+      const io = new IntersectionObserver(
+        ([{ isIntersecting }]) => {
+          if (isIntersecting) {
+            /*
+             * TODO: Enable the checkboxes that are disabled by default via the model.
+             *  Currently they are enabled by default
+             * */
+            io.unobserve(intersection);
+          }
+        },
+        {
+          threshold: [1],
         }
-      }, {
-        threshold: [1],
-      });
+      );
       io.observe(intersection);
     }
   }

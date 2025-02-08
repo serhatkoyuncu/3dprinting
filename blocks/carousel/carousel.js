@@ -1,3 +1,6 @@
+/* eslint-disable quotes */
+/* eslint-disable indent */
+/* eslint-disable comma-dangle */
 import { fetchPlaceholders } from "../../scripts/aem.js";
 
 function updateActiveSlide(slide) {

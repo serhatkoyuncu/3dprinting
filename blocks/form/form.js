@@ -1,3 +1,10 @@
+/* eslint-disable quotes */
+/* eslint-disable indent */
+/* eslint-disable no-console */
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable operator-linebreak */
+/* eslint-disable comma-dangle */
 import {
   createButton,
   createFieldWrapper,

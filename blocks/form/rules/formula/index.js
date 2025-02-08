@@ -218,45 +218,45 @@ var dataTypes = {
 };
 
 var tokenDefinitions = {
-  TOK_EOF: 'EOF',
-  TOK_UNQUOTEDIDENTIFIER: 'UnquotedIdentifier',
-  TOK_QUOTEDIDENTIFIER: 'QuotedIdentifier',
-  TOK_RBRACKET: 'Rbracket',
-  TOK_RPAREN: 'Rparen',
-  TOK_COMMA: 'Comma',
-  TOK_COLON: 'Colon',
-  TOK_CONCATENATE: 'Concatenate',
-  TOK_RBRACE: 'Rbrace',
-  TOK_NUMBER: 'Number',
-  TOK_CURRENT: 'Current',
-  TOK_GLOBAL: 'Global',
-  TOK_FIELD: 'Field',
-  TOK_EXPREF: 'Expref',
-  TOK_PIPE: 'Pipe',
-  TOK_OR: 'Or',
-  TOK_AND: 'And',
-  TOK_ADD: 'Add',
-  TOK_SUBTRACT: 'Subtract',
-  TOK_UNARY_MINUS: 'UnaryMinus',
-  TOK_MULTIPLY: 'Multiply',
-  TOK_POWER: 'Power',
-  TOK_UNION: 'Union',
-  TOK_DIVIDE: 'Divide',
-  TOK_EQ: 'EQ',
-  TOK_GT: 'GT',
-  TOK_LT: 'LT',
-  TOK_GTE: 'GTE',
-  TOK_LTE: 'LTE',
-  TOK_NE: 'NE',
-  TOK_FLATTEN: 'Flatten',
-  TOK_STAR: 'Star',
-  TOK_FILTER: 'Filter',
-  TOK_DOT: 'Dot',
-  TOK_NOT: 'Not',
-  TOK_LBRACE: 'Lbrace',
-  TOK_LBRACKET: 'Lbracket',
-  TOK_LPAREN: 'Lparen',
-  TOK_LITERAL: 'Literal',
+  TOK_EOF: "EOF",
+  TOK_UNQUOTEDIDENTIFIER: "UnquotedIdentifier",
+  TOK_QUOTEDIDENTIFIER: "QuotedIdentifier",
+  TOK_RBRACKET: "Rbracket",
+  TOK_RPAREN: "Rparen",
+  TOK_COMMA: "Comma",
+  TOK_COLON: "Colon",
+  TOK_CONCATENATE: "Concatenate",
+  TOK_RBRACE: "Rbrace",
+  TOK_NUMBER: "Number",
+  TOK_CURRENT: "Current",
+  TOK_GLOBAL: "Global",
+  TOK_FIELD: "Field",
+  TOK_EXPREF: "Expref",
+  TOK_PIPE: "Pipe",
+  TOK_OR: "Or",
+  TOK_AND: "And",
+  TOK_ADD: "Add",
+  TOK_SUBTRACT: "Subtract",
+  TOK_UNARY_MINUS: "UnaryMinus",
+  TOK_MULTIPLY: "Multiply",
+  TOK_POWER: "Power",
+  TOK_UNION: "Union",
+  TOK_DIVIDE: "Divide",
+  TOK_EQ: "EQ",
+  TOK_GT: "GT",
+  TOK_LT: "LT",
+  TOK_GTE: "GTE",
+  TOK_LTE: "LTE",
+  TOK_NE: "NE",
+  TOK_FLATTEN: "Flatten",
+  TOK_STAR: "Star",
+  TOK_FILTER: "Filter",
+  TOK_DOT: "Dot",
+  TOK_NOT: "Not",
+  TOK_LBRACE: "Lbrace",
+  TOK_LBRACKET: "Lbracket",
+  TOK_LPAREN: "Lparen",
+  TOK_LITERAL: "Literal",
 };
 
 const {
@@ -273,42 +273,41 @@ const {
   TYPE_CLASS: TYPE_CLASS$1,
   TYPE_ARRAY_ARRAY,
 } = dataTypes;
-const {
-  TOK_EXPREF: TOK_EXPREF$3,
-} = tokenDefinitions;
+const { TOK_EXPREF: TOK_EXPREF$3 } = tokenDefinitions;
 const TYPE_NAME_TABLE = {
-  [TYPE_NUMBER]: 'number',
-  [TYPE_ANY$1]: 'any',
-  [TYPE_STRING$1]: 'string',
-  [TYPE_ARRAY$1]: 'array',
-  [TYPE_OBJECT]: 'object',
-  [TYPE_BOOLEAN]: 'boolean',
-  [TYPE_EXPREF]: 'expression',
-  [TYPE_NULL]: 'null',
-  [TYPE_ARRAY_NUMBER]: 'Array<number>',
-  [TYPE_ARRAY_STRING$1]: 'Array<string>',
-  [TYPE_CLASS$1]: 'class',
-  [TYPE_ARRAY_ARRAY]: 'Array<array>',
+  [TYPE_NUMBER]: "number",
+  [TYPE_ANY$1]: "any",
+  [TYPE_STRING$1]: "string",
+  [TYPE_ARRAY$1]: "array",
+  [TYPE_OBJECT]: "object",
+  [TYPE_BOOLEAN]: "boolean",
+  [TYPE_EXPREF]: "expression",
+  [TYPE_NULL]: "null",
+  [TYPE_ARRAY_NUMBER]: "Array<number>",
+  [TYPE_ARRAY_STRING$1]: "Array<string>",
+  [TYPE_CLASS$1]: "class",
+  [TYPE_ARRAY_ARRAY]: "Array<array>",
 };
 function getTypeName(inputObj, useValueOf = true) {
   if (inputObj === null) return TYPE_NULL;
   let obj = inputObj;
   if (useValueOf) {
-    if (typeof inputObj.valueOf === 'function') obj = inputObj.valueOf.call(inputObj);
+    if (typeof inputObj.valueOf === "function")
+      obj = inputObj.valueOf.call(inputObj);
     else return TYPE_OBJECT;
   }
   switch (Object.prototype.toString.call(obj)) {
-    case '[object String]':
+    case "[object String]":
       return TYPE_STRING$1;
-    case '[object Number]':
+    case "[object Number]":
       return TYPE_NUMBER;
-    case '[object Array]':
+    case "[object Array]":
       return TYPE_ARRAY$1;
-    case '[object Boolean]':
+    case "[object Boolean]":
       return TYPE_BOOLEAN;
-    case '[object Null]':
+    case "[object Null]":
       return TYPE_NULL;
-    case '[object Object]':
+    case "[object Object]":
       if (obj.jmespathType === TOK_EXPREF$3) {
         return TYPE_EXPREF;
       }
@@ -322,22 +321,37 @@ function getTypeNames(inputObj) {
   const type2 = getTypeName(inputObj, false);
   return [type1, type2];
 }
-function matchType(actuals, expectedList, argValue, context, toNumber, toString) {
+function matchType(
+  actuals,
+  expectedList,
+  argValue,
+  context,
+  toNumber,
+  toString
+) {
   const actual = actuals[0];
-  if (expectedList.findIndex(
-    type => type === TYPE_ANY$1 || actual === type,
-  ) !== -1
-  ) return argValue;
+  if (
+    expectedList.findIndex((type) => type === TYPE_ANY$1 || actual === type) !==
+    -1
+  )
+    return argValue;
   let wrongType = false;
-  if (actual === TYPE_OBJECT || (expectedList.length === 1 && expectedList[0] === TYPE_CLASS$1)) {
+  if (
+    actual === TYPE_OBJECT ||
+    (expectedList.length === 1 && expectedList[0] === TYPE_CLASS$1)
+  ) {
     wrongType = true;
   }
-  if (actual === TYPE_ARRAY$1 && (expectedList.length === 1 && expectedList[0] === TYPE_OBJECT)) {
+  if (
+    actual === TYPE_ARRAY$1 &&
+    expectedList.length === 1 &&
+    expectedList[0] === TYPE_OBJECT
+  ) {
     wrongType = true;
   }
   if (expectedList.includes(TYPE_ARRAY_ARRAY)) {
     if (actual === TYPE_ARRAY$1) {
-      argValue.forEach(a => {
+      argValue.forEach((a) => {
         if (!(a instanceof Array)) wrongType = true;
       });
       if (!wrongType) return argValue;
@@ -345,30 +359,45 @@ function matchType(actuals, expectedList, argValue, context, toNumber, toString)
     wrongType = true;
   }
   if (wrongType) {
-    throw new Error(`TypeError: ${context} expected argument to be type ${TYPE_NAME_TABLE[expectedList[0]]} but received type ${TYPE_NAME_TABLE[actual]} instead.`);
+    throw new Error(
+      `TypeError: ${context} expected argument to be type ${
+        TYPE_NAME_TABLE[expectedList[0]]
+      } but received type ${TYPE_NAME_TABLE[actual]} instead.`
+    );
   }
   let expected = -1;
   if (actual === TYPE_ARRAY$1) {
-    if (expectedList.includes(TYPE_ARRAY_STRING$1) && expectedList.includes(TYPE_ARRAY_NUMBER)) {
-      if (argValue.length > 0 && typeof argValue[0] === 'string') expected = TYPE_ARRAY_STRING$1;
+    if (
+      expectedList.includes(TYPE_ARRAY_STRING$1) &&
+      expectedList.includes(TYPE_ARRAY_NUMBER)
+    ) {
+      if (argValue.length > 0 && typeof argValue[0] === "string")
+        expected = TYPE_ARRAY_STRING$1;
       else expected = TYPE_ARRAY_NUMBER;
     }
   }
-  if (expected === -1 && [TYPE_ARRAY_STRING$1, TYPE_ARRAY_NUMBER, TYPE_ARRAY$1].includes(actual)) {
-    expected = expectedList.find(
-      e => [TYPE_ARRAY_STRING$1, TYPE_ARRAY_NUMBER, TYPE_ARRAY$1].includes(e),
+  if (
+    expected === -1 &&
+    [TYPE_ARRAY_STRING$1, TYPE_ARRAY_NUMBER, TYPE_ARRAY$1].includes(actual)
+  ) {
+    expected = expectedList.find((e) =>
+      [TYPE_ARRAY_STRING$1, TYPE_ARRAY_NUMBER, TYPE_ARRAY$1].includes(e)
     );
   }
   if (expected === -1) [expected] = expectedList;
   if (expected === TYPE_ANY$1) return argValue;
-  if (expected === TYPE_ARRAY_STRING$1
-      || expected === TYPE_ARRAY_NUMBER
-      || expected === TYPE_ARRAY$1) {
+  if (
+    expected === TYPE_ARRAY_STRING$1 ||
+    expected === TYPE_ARRAY_NUMBER ||
+    expected === TYPE_ARRAY$1
+  ) {
     if (expected === TYPE_ARRAY$1) {
-      if (actual === TYPE_ARRAY_NUMBER || actual === TYPE_ARRAY_STRING$1) return argValue;
+      if (actual === TYPE_ARRAY_NUMBER || actual === TYPE_ARRAY_STRING$1)
+        return argValue;
       return argValue === null ? [] : [argValue];
     }
-    const subtype = expected === TYPE_ARRAY_NUMBER ? TYPE_NUMBER : TYPE_STRING$1;
+    const subtype =
+      expected === TYPE_ARRAY_NUMBER ? TYPE_NUMBER : TYPE_STRING$1;
     if (actual === TYPE_ARRAY$1) {
       const returnArray = argValue.slice();
       for (let i = 0; i < returnArray.length; i += 1) {
@@ -379,21 +408,26 @@ function matchType(actuals, expectedList, argValue, context, toNumber, toString)
           returnArray[i],
           context,
           toNumber,
-          toString,
+          toString
         );
       }
       return returnArray;
     }
-    if ([TYPE_NUMBER, TYPE_STRING$1, TYPE_NULL, TYPE_BOOLEAN].includes(subtype)) {
-      return [matchType(actuals, [subtype], argValue, context, toNumber, toString)];
+    if (
+      [TYPE_NUMBER, TYPE_STRING$1, TYPE_NULL, TYPE_BOOLEAN].includes(subtype)
+    ) {
+      return [
+        matchType(actuals, [subtype], argValue, context, toNumber, toString),
+      ];
     }
   } else {
     if (expected === TYPE_NUMBER) {
-      if ([TYPE_STRING$1, TYPE_BOOLEAN, TYPE_NULL].includes(actual)) return toNumber(argValue);
+      if ([TYPE_STRING$1, TYPE_BOOLEAN, TYPE_NULL].includes(actual))
+        return toNumber(argValue);
       return 0;
     }
     if (expected === TYPE_STRING$1) {
-      if (actual === TYPE_NULL || actual === TYPE_OBJECT) return '';
+      if (actual === TYPE_NULL || actual === TYPE_OBJECT) return "";
       return toString(argValue);
     }
     if (expected === TYPE_BOOLEAN) {
@@ -403,27 +437,31 @@ function matchType(actuals, expectedList, argValue, context, toNumber, toString)
       return argValue;
     }
   }
-  throw new Error(`TypeError: ${context} expected argument to be type ${TYPE_NAME_TABLE[expectedList[0]]} but received type ${TYPE_NAME_TABLE[actual]} instead.`);
+  throw new Error(
+    `TypeError: ${context} expected argument to be type ${
+      TYPE_NAME_TABLE[expectedList[0]]
+    } but received type ${TYPE_NAME_TABLE[actual]} instead.`
+  );
 }
 
 function isArray(obj) {
   if (obj !== null) {
-    return Object.prototype.toString.call(obj) === '[object Array]';
+    return Object.prototype.toString.call(obj) === "[object Array]";
   }
   return false;
 }
 function isObject(obj) {
   if (obj !== null) {
-    return Object.prototype.toString.call(obj) === '[object Object]';
+    return Object.prototype.toString.call(obj) === "[object Object]";
   }
   return false;
 }
 function getValueOf(a) {
   if (a === null || a === undefined) return a;
   if (isArray(a)) {
-    return a.map(i => getValueOf(i));
+    return a.map((i) => getValueOf(i));
   }
-  if (typeof (a.valueOf) !== 'function') return a;
+  if (typeof a.valueOf !== "function") return a;
   return a.valueOf();
 }
 function strictDeepEqual(lhs, rhs) {
@@ -482,15 +520,11 @@ const {
   TOK_NE: TOK_NE$2,
   TOK_FLATTEN: TOK_FLATTEN$2,
 } = tokenDefinitions;
-const {
-  TYPE_STRING,
-  TYPE_ARRAY_STRING,
-  TYPE_ARRAY,
-} = dataTypes;
+const { TYPE_STRING, TYPE_ARRAY_STRING, TYPE_ARRAY } = dataTypes;
 function isFalse(value) {
   if (value === null) return true;
   const obj = getValueOf(value);
-  if (obj === '' || obj === false || obj === null) {
+  if (obj === "" || obj === false || obj === null) {
     return true;
   }
   if (isArray(obj) && obj.length === 0) {
@@ -526,12 +560,15 @@ class TreeInterpreter {
       Field: (node, value) => {
         if (value !== null && (isObject(value) || isArray(value))) {
           let field = value[node.name];
-          if (typeof field === 'function') field = undefined;
+          if (typeof field === "function") field = undefined;
           if (field === undefined) {
             try {
               this.debug.push(`Failed to find: '${node.name}'`);
-              const available = Object.keys(value).map(a => `'${a}'`).toString();
-              if (available.length) this.debug.push(`Available fields: ${available}`);
+              const available = Object.keys(value)
+                .map((a) => `'${a}'`)
+                .toString();
+              if (available.length)
+                this.debug.push(`Available fields: ${available}`);
             } catch (e) {}
             return null;
           }
@@ -573,14 +610,18 @@ class TreeInterpreter {
           }
           return result;
         }
-        this.debug.push(`left side of index expression ${value} is not an array or object.`);
+        this.debug.push(
+          `left side of index expression ${value} is not an array or object.`
+        );
         return null;
       },
       Slice: (node, value) => {
         if (!isArray(value)) return null;
-        const sliceParams = node.children.slice(0).map(
-          param => (param != null ? this.toNumber(this.visit(param, value)) : null),
-        );
+        const sliceParams = node.children
+          .slice(0)
+          .map((param) =>
+            param != null ? this.toNumber(this.visit(param, value)) : null
+          );
         const computed = this.computeSliceParams(value.length, sliceParams);
         const [start, stop, step] = computed;
         const result = [];
@@ -599,7 +640,7 @@ class TreeInterpreter {
         const base = this.visit(node.children[0], value);
         if (!isArray(base)) return null;
         const collected = [];
-        base.forEach(b => {
+        base.forEach((b) => {
           const current = this.visit(node.children[1], b);
           if (current !== null) {
             collected.push(current);
@@ -612,7 +653,7 @@ class TreeInterpreter {
         if (!isObject(getValueOf(projection))) return null;
         const collected = [];
         const values = objValues(projection);
-        values.forEach(val => {
+        values.forEach((val) => {
           const current = this.visit(node.children[1], val);
           if (current !== null) collected.push(current);
         });
@@ -621,12 +662,12 @@ class TreeInterpreter {
       FilterProjection: (node, value) => {
         const base = this.visit(node.children[0], value);
         if (!isArray(base)) return null;
-        const filtered = base.filter(b => {
+        const filtered = base.filter((b) => {
           const matched = this.visit(node.children[2], b);
           return !isFalse(matched);
         });
         const finalResults = [];
-        filtered.forEach(f => {
+        filtered.forEach((f) => {
           const current = this.visit(node.children[1], f);
           if (current !== null) finalResults.push(current);
         });
@@ -647,7 +688,7 @@ class TreeInterpreter {
         const original = this.visit(node.children[0], value);
         if (!isArray(original)) return null;
         const merged = [];
-        original.forEach(current => {
+        original.forEach((current) => {
           if (isArray(current)) {
             merged.push(...current);
           } else {
@@ -659,12 +700,12 @@ class TreeInterpreter {
       Identity: (_node, value) => value,
       MultiSelectList: (node, value) => {
         if (value === null) return null;
-        return node.children.map(child => this.visit(child, value));
+        return node.children.map((child) => this.visit(child, value));
       },
       MultiSelectHash: (node, value) => {
         if (value === null) return null;
         const collected = {};
-        node.children.forEach(child => {
+        node.children.forEach((child) => {
           collected[child.name] = this.visit(child.value, value);
         });
         return collected;
@@ -682,41 +723,69 @@ class TreeInterpreter {
       AddExpression: (node, value) => {
         const first = this.visit(node.children[0], value);
         const second = this.visit(node.children[1], value);
-        return this.applyOperator(first, second, '+');
+        return this.applyOperator(first, second, "+");
       },
       ConcatenateExpression: (node, value) => {
         let first = this.visit(node.children[0], value);
         let second = this.visit(node.children[1], value);
-        first = matchType(getTypeNames(first), [TYPE_STRING, TYPE_ARRAY_STRING], first, 'concatenate', this.toNumber, this.toString);
-        second = matchType(getTypeNames(second), [TYPE_STRING, TYPE_ARRAY_STRING], second, 'concatenate', this.toNumber, this.toString);
-        return this.applyOperator(first, second, '&');
+        first = matchType(
+          getTypeNames(first),
+          [TYPE_STRING, TYPE_ARRAY_STRING],
+          first,
+          "concatenate",
+          this.toNumber,
+          this.toString
+        );
+        second = matchType(
+          getTypeNames(second),
+          [TYPE_STRING, TYPE_ARRAY_STRING],
+          second,
+          "concatenate",
+          this.toNumber,
+          this.toString
+        );
+        return this.applyOperator(first, second, "&");
       },
       UnionExpression: (node, value) => {
         let first = this.visit(node.children[0], value);
         let second = this.visit(node.children[1], value);
-        first = matchType(getTypeNames(first), [TYPE_ARRAY], first, 'union', this.toNumber, this.toString);
-        second = matchType(getTypeNames(second), [TYPE_ARRAY], second, 'union', this.toNumber, this.toString);
+        first = matchType(
+          getTypeNames(first),
+          [TYPE_ARRAY],
+          first,
+          "union",
+          this.toNumber,
+          this.toString
+        );
+        second = matchType(
+          getTypeNames(second),
+          [TYPE_ARRAY],
+          second,
+          "union",
+          this.toNumber,
+          this.toString
+        );
         return first.concat(second);
       },
       SubtractExpression: (node, value) => {
         const first = this.visit(node.children[0], value);
         const second = this.visit(node.children[1], value);
-        return this.applyOperator(first, second, '-');
+        return this.applyOperator(first, second, "-");
       },
       MultiplyExpression: (node, value) => {
         const first = this.visit(node.children[0], value);
         const second = this.visit(node.children[1], value);
-        return this.applyOperator(first, second, '*');
+        return this.applyOperator(first, second, "*");
       },
       DivideExpression: (node, value) => {
         const first = this.visit(node.children[0], value);
         const second = this.visit(node.children[1], value);
-        return this.applyOperator(first, second, '/');
+        return this.applyOperator(first, second, "/");
       },
       PowerExpression: (node, value) => {
         const first = this.visit(node.children[0], value);
         const second = this.visit(node.children[1], value);
-        return this.applyOperator(first, second, '^');
+        return this.applyOperator(first, second, "^");
       },
       NotExpression: (node, value) => {
         const first = this.visit(node.children[0], value);
@@ -726,30 +795,40 @@ class TreeInterpreter {
         const first = this.visit(node.children[0], value);
         return first * -1;
       },
-      Literal: node => node.value,
-      Number: node => node.value,
+      Literal: (node) => node.value,
+      Number: (node) => node.value,
       [TOK_PIPE$2]: (node, value) => {
         const left = this.visit(node.children[0], value);
         return this.visit(node.children[1], left);
       },
       [TOK_CURRENT$2]: (_node, value) => value,
-      [TOK_GLOBAL$2]: node => {
+      [TOK_GLOBAL$2]: (node) => {
         const result = this.globals[node.name];
         return result === undefined ? null : result;
       },
       Function: (node, value) => {
-        if (node.name === 'if') return this.runtime.callFunction(node.name, node.children, value, this, false);
-        const resolvedArgs = node.children.map(child => this.visit(child, value));
+        if (node.name === "if")
+          return this.runtime.callFunction(
+            node.name,
+            node.children,
+            value,
+            this,
+            false
+          );
+        const resolvedArgs = node.children.map((child) =>
+          this.visit(child, value)
+        );
         return this.runtime.callFunction(node.name, resolvedArgs, value, this);
       },
-      ExpressionReference: node => {
+      ExpressionReference: (node) => {
         const [refNode] = node.children;
         refNode.jmespathType = TOK_EXPREF$2;
         return refNode;
       },
     };
     const fn = n && visitFunctions[n.type];
-    if (!fn) throw new Error(`Unknown/missing node type ${(n && n.type) || ''}`);
+    if (!fn)
+      throw new Error(`Unknown/missing node type ${(n && n.type) || ""}`);
     return fn(n, v);
   }
   computeSliceParams(arrayLength, sliceParams) {
@@ -769,8 +848,8 @@ class TreeInterpreter {
     if (step === null) {
       step = 1;
     } else if (step === 0) {
-      const error = new Error('Invalid slice, step cannot be 0');
-      error.name = 'RuntimeError';
+      const error = new Error("Invalid slice, step cannot be 0");
+      error.name = "RuntimeError";
       throw error;
     }
     const stepValueNegative = step < 0;
@@ -798,19 +877,21 @@ class TreeInterpreter {
       }
       return result;
     }
-    if (isArray(first)) return first.map(a => this.applyOperator(a, second, operator));
-    if (isArray(second)) return second.map(a => this.applyOperator(first, a, operator));
-    if (operator === '*') return this.toNumber(first) * this.toNumber(second);
-    if (operator === '&') return first + second;
-    if (operator === '+') {
+    if (isArray(first))
+      return first.map((a) => this.applyOperator(a, second, operator));
+    if (isArray(second))
+      return second.map((a) => this.applyOperator(first, a, operator));
+    if (operator === "*") return this.toNumber(first) * this.toNumber(second);
+    if (operator === "&") return first + second;
+    if (operator === "+") {
       return this.toNumber(first) + this.toNumber(second);
     }
-    if (operator === '-') return this.toNumber(first) - this.toNumber(second);
-    if (operator === '/') {
+    if (operator === "-") return this.toNumber(first) - this.toNumber(second);
+    if (operator === "/") {
       const result = first / second;
       return Number.isFinite(result) ? result : null;
     }
-    if (operator === '^') {
+    if (operator === "^") {
       return first ** second;
     }
     throw new Error(`Unknown operator: ${operator}`);
@@ -857,45 +938,45 @@ const {
   TOK_LITERAL: TOK_LITERAL$1,
 } = tokenDefinitions;
 const basicTokens = {
-  '.': TOK_DOT$1,
-  ',': TOK_COMMA$1,
-  ':': TOK_COLON$1,
-  '{': TOK_LBRACE$1,
-  '}': TOK_RBRACE$1,
-  ']': TOK_RBRACKET$1,
-  '(': TOK_LPAREN$1,
-  ')': TOK_RPAREN$1,
-  '@': TOK_CURRENT$1,
+  ".": TOK_DOT$1,
+  ",": TOK_COMMA$1,
+  ":": TOK_COLON$1,
+  "{": TOK_LBRACE$1,
+  "}": TOK_RBRACE$1,
+  "]": TOK_RBRACKET$1,
+  "(": TOK_LPAREN$1,
+  ")": TOK_RPAREN$1,
+  "@": TOK_CURRENT$1,
 };
-const globalStartToken = '$';
+const globalStartToken = "$";
 const operatorStartToken = {
-  '<': true,
-  '>': true,
-  '=': true,
-  '!': true,
+  "<": true,
+  ">": true,
+  "=": true,
+  "!": true,
 };
 const skipChars = {
-  ' ': true,
-  '\t': true,
-  '\n': true,
+  " ": true,
+  "\t": true,
+  "\n": true,
 };
 function isNum(ch) {
-  return (ch >= '0' && ch <= '9') || (ch === '.');
+  return (ch >= "0" && ch <= "9") || ch === ".";
 }
 function isAlphaNum(ch) {
-  return (ch >= 'a' && ch <= 'z')
-           || (ch >= 'A' && ch <= 'Z')
-           || (ch >= '0' && ch <= '9')
-           || ch === '_';
+  return (
+    (ch >= "a" && ch <= "z") ||
+    (ch >= "A" && ch <= "Z") ||
+    (ch >= "0" && ch <= "9") ||
+    ch === "_"
+  );
 }
 function isIdentifier(stream, pos) {
   const ch = stream[pos];
-  if (ch === '$') {
+  if (ch === "$") {
     return stream.length > pos && isAlphaNum(stream[pos + 1]);
   }
-  return (ch >= 'a' && ch <= 'z')
-          || (ch >= 'A' && ch <= 'Z')
-          || ch === '_';
+  return (ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z") || ch === "_";
 }
 class Lexer {
   constructor(allowedGlobalNames = [], debug = []) {
@@ -927,13 +1008,24 @@ class Lexer {
           start: this._current,
         });
         this._current += 1;
-      } else if (stream[this._current] === '-' && ![TOK_GLOBAL$1, TOK_CURRENT$1, TOK_NUMBER$1, TOK_RPAREN$1, TOK_UNQUOTEDIDENTIFIER$1, TOK_QUOTEDIDENTIFIER$1, TOK_RBRACKET$1].includes(prev)) {
+      } else if (
+        stream[this._current] === "-" &&
+        ![
+          TOK_GLOBAL$1,
+          TOK_CURRENT$1,
+          TOK_NUMBER$1,
+          TOK_RPAREN$1,
+          TOK_UNQUOTEDIDENTIFIER$1,
+          TOK_QUOTEDIDENTIFIER$1,
+          TOK_RBRACKET$1,
+        ].includes(prev)
+      ) {
         token = this._consumeUnaryMinus(stream);
         tokens.push(token);
       } else if (isNum(stream[this._current])) {
         token = this._consumeNumber(stream);
         tokens.push(token);
-      } else if (stream[this._current] === '[') {
+      } else if (stream[this._current] === "[") {
         token = this._consumeLBracket(stream);
         tokens.push(token);
       } else if (stream[this._current] === '"') {
@@ -952,7 +1044,7 @@ class Lexer {
           value: identifier,
           start,
         });
-      } else if (stream[this._current] === '`') {
+      } else if (stream[this._current] === "`") {
         start = this._current;
         const literal = this._consumeLiteral(stream);
         tokens.push({
@@ -964,66 +1056,69 @@ class Lexer {
         tokens.push(this._consumeOperator(stream));
       } else if (skipChars[stream[this._current]] !== undefined) {
         this._current += 1;
-      } else if (stream[this._current] === '&') {
+      } else if (stream[this._current] === "&") {
         start = this._current;
         this._current += 1;
-        if (stream[this._current] === '&') {
+        if (stream[this._current] === "&") {
           this._current += 1;
-          tokens.push({ type: TOK_AND$1, value: '&&', start });
+          tokens.push({ type: TOK_AND$1, value: "&&", start });
         } else if (prev === TOK_COMMA$1 || prev === TOK_LPAREN$1) {
-          tokens.push({ type: TOK_EXPREF$1, value: '&', start });
+          tokens.push({ type: TOK_EXPREF$1, value: "&", start });
         } else {
-          tokens.push({ type: TOK_CONCATENATE$1, value: '&', start });
+          tokens.push({ type: TOK_CONCATENATE$1, value: "&", start });
         }
-      } else if (stream[this._current] === '~') {
+      } else if (stream[this._current] === "~") {
         start = this._current;
         this._current += 1;
-        tokens.push({ type: TOK_UNION$1, value: '~', start });
-      } else if (stream[this._current] === '+') {
+        tokens.push({ type: TOK_UNION$1, value: "~", start });
+      } else if (stream[this._current] === "+") {
         start = this._current;
         this._current += 1;
-        tokens.push({ type: TOK_ADD$1, value: '+', start });
-      } else if (stream[this._current] === '-') {
+        tokens.push({ type: TOK_ADD$1, value: "+", start });
+      } else if (stream[this._current] === "-") {
         start = this._current;
         this._current += 1;
-        tokens.push({ type: TOK_SUBTRACT$1, value: '-', start });
-      } else if (stream[this._current] === '*') {
+        tokens.push({ type: TOK_SUBTRACT$1, value: "-", start });
+      } else if (stream[this._current] === "*") {
         start = this._current;
         this._current += 1;
         const prevToken = tokens.length && tokens.slice(-1)[0].type;
-        if (tokens.length === 0 || [
-          TOK_LBRACKET$1,
-          TOK_DOT$1,
-          TOK_PIPE$1,
-          TOK_AND$1,
-          TOK_OR$1,
-          TOK_COMMA$1,
-          TOK_COLON$1,
-        ].includes(prevToken)) {
-          tokens.push({ type: TOK_STAR$1, value: '*', start });
+        if (
+          tokens.length === 0 ||
+          [
+            TOK_LBRACKET$1,
+            TOK_DOT$1,
+            TOK_PIPE$1,
+            TOK_AND$1,
+            TOK_OR$1,
+            TOK_COMMA$1,
+            TOK_COLON$1,
+          ].includes(prevToken)
+        ) {
+          tokens.push({ type: TOK_STAR$1, value: "*", start });
         } else {
-          tokens.push({ type: TOK_MULTIPLY$1, value: '*', start });
+          tokens.push({ type: TOK_MULTIPLY$1, value: "*", start });
         }
-      } else if (stream[this._current] === '/') {
+      } else if (stream[this._current] === "/") {
         start = this._current;
         this._current += 1;
-        tokens.push({ type: TOK_DIVIDE$1, value: '/', start });
-      } else if (stream[this._current] === '^') {
+        tokens.push({ type: TOK_DIVIDE$1, value: "/", start });
+      } else if (stream[this._current] === "^") {
         start = this._current;
         this._current += 1;
-        tokens.push({ type: TOK_POWER$1, value: '^', start });
-      } else if (stream[this._current] === '|') {
+        tokens.push({ type: TOK_POWER$1, value: "^", start });
+      } else if (stream[this._current] === "|") {
         start = this._current;
         this._current += 1;
-        if (stream[this._current] === '|') {
+        if (stream[this._current] === "|") {
           this._current += 1;
-          tokens.push({ type: TOK_OR$1, value: '||', start });
+          tokens.push({ type: TOK_OR$1, value: "||", start });
         } else {
-          tokens.push({ type: TOK_PIPE$1, value: '|', start });
+          tokens.push({ type: TOK_PIPE$1, value: "|", start });
         }
       } else {
         const error = new Error(`Unknown character:${stream[this._current]}`);
-        error.name = 'LexerError';
+        error.name = "LexerError";
         throw error;
       }
     }
@@ -1045,8 +1140,10 @@ class Lexer {
     while (stream[this._current] !== '"' && this._current < maxLength) {
       let current = this._current;
       if (!isAlphaNum(stream[current])) foundNonAlpha = true;
-      if (stream[current] === '\\' && (stream[current + 1] === '\\'
-                                             || stream[current + 1] === '"')) {
+      if (
+        stream[current] === "\\" &&
+        (stream[current + 1] === "\\" || stream[current + 1] === '"')
+      ) {
         current += 2;
       } else {
         current += 1;
@@ -1056,9 +1153,11 @@ class Lexer {
     this._current += 1;
     const val = stream.slice(start, this._current);
     try {
-      if (!foundNonAlpha || val.includes(' ')) {
+      if (!foundNonAlpha || val.includes(" ")) {
         this.debug.push(`Suspicious quotes: ${val}`);
-        this.debug.push(`Did you intend a literal? '${val.replace(/"/g, '')}'?`);
+        this.debug.push(
+          `Did you intend a literal? '${val.replace(/"/g, "")}'?`
+        );
       }
     } catch (e) {}
     return JSON.parse(val);
@@ -1069,8 +1168,10 @@ class Lexer {
     const maxLength = stream.length;
     while (stream[this._current] !== "'" && this._current < maxLength) {
       let current = this._current;
-      if (stream[current] === '\\' && (stream[current + 1] === '\\'
-                                             || stream[current + 1] === "'")) {
+      if (
+        stream[current] === "\\" &&
+        (stream[current + 1] === "\\" || stream[current + 1] === "'")
+      ) {
         current += 2;
       } else {
         current += 1;
@@ -1090,7 +1191,7 @@ class Lexer {
     }
     const n = stream.slice(start, this._current);
     let value;
-    if (n.includes('.')) {
+    if (n.includes(".")) {
       value = parseFloat(n);
     } else {
       value = parseInt(n, 10);
@@ -1100,20 +1201,20 @@ class Lexer {
   _consumeUnaryMinus() {
     const start = this._current;
     this._current += 1;
-    return { type: TOK_UNARY_MINUS$1, value: '-', start };
+    return { type: TOK_UNARY_MINUS$1, value: "-", start };
   }
   _consumeLBracket(stream) {
     const start = this._current;
     this._current += 1;
-    if (stream[this._current] === '?') {
+    if (stream[this._current] === "?") {
       this._current += 1;
-      return { type: TOK_FILTER$1, value: '[?', start };
+      return { type: TOK_FILTER$1, value: "[?", start };
     }
-    if (stream[this._current] === ']') {
+    if (stream[this._current] === "]") {
       this._current += 1;
-      return { type: TOK_FLATTEN$1, value: '[]', start };
+      return { type: TOK_FLATTEN$1, value: "[]", start };
     }
-    return { type: TOK_LBRACKET$1, value: '[', start };
+    return { type: TOK_LBRACKET$1, value: "[", start };
   }
   _isGlobal(prev, stream, pos) {
     if (prev !== null && prev === TOK_DOT$1) return false;
@@ -1127,7 +1228,8 @@ class Lexer {
   _consumeGlobal(stream) {
     const start = this._current;
     this._current += 1;
-    while (this._current < stream.length && isAlphaNum(stream[this._current])) this._current += 1;
+    while (this._current < stream.length && isAlphaNum(stream[this._current]))
+      this._current += 1;
     const global = stream.slice(start, this._current);
     return { type: TOK_GLOBAL$1, name: global, start };
   }
@@ -1135,39 +1237,39 @@ class Lexer {
     const start = this._current;
     const startingChar = stream[start];
     this._current += 1;
-    if (startingChar === '!') {
-      if (stream[this._current] === '=') {
+    if (startingChar === "!") {
+      if (stream[this._current] === "=") {
         this._current += 1;
-        return { type: TOK_NE$1, value: '!=', start };
+        return { type: TOK_NE$1, value: "!=", start };
       }
-      return { type: TOK_NOT$1, value: '!', start };
+      return { type: TOK_NOT$1, value: "!", start };
     }
-    if (startingChar === '<') {
-      if (stream[this._current] === '=') {
+    if (startingChar === "<") {
+      if (stream[this._current] === "=") {
         this._current += 1;
-        return { type: TOK_LTE$1, value: '<=', start };
+        return { type: TOK_LTE$1, value: "<=", start };
       }
-      return { type: TOK_LT$1, value: '<', start };
+      return { type: TOK_LT$1, value: "<", start };
     }
-    if (startingChar === '>') {
-      if (stream[this._current] === '=') {
+    if (startingChar === ">") {
+      if (stream[this._current] === "=") {
         this._current += 1;
-        return { type: TOK_GTE$1, value: '>=', start };
+        return { type: TOK_GTE$1, value: ">=", start };
       }
-      return { type: TOK_GT$1, value: '>', start };
+      return { type: TOK_GT$1, value: ">", start };
     }
-    if (stream[this._current] === '=') {
+    if (stream[this._current] === "=") {
       this._current += 1;
-      return { type: TOK_EQ$1, value: '==', start };
+      return { type: TOK_EQ$1, value: "==", start };
     }
-    return { type: TOK_EQ$1, value: '=', start };
+    return { type: TOK_EQ$1, value: "=", start };
   }
   _consumeLiteral(stream) {
     function _looksLikeJSON(str) {
-      if (str === '') return false;
+      if (str === "") return false;
       if ('[{"'.includes(str[0])) return true;
-      if (['true', 'false', 'null'].includes(str)) return true;
-      if ('-0123456789'.includes(str[0])) {
+      if (["true", "false", "null"].includes(str)) return true;
+      if ("-0123456789".includes(str[0])) {
         try {
           JSON.parse(str);
           return true;
@@ -1183,14 +1285,20 @@ class Lexer {
     const maxLength = stream.length;
     let literal;
     let inQuotes = false;
-    while ((inQuotes || stream[this._current] !== '`') && this._current < maxLength) {
+    while (
+      (inQuotes || stream[this._current] !== "`") &&
+      this._current < maxLength
+    ) {
       let current = this._current;
-      if (inQuotes && stream[current] === '\\' && stream[current + 1] === '"') current += 2;
+      if (inQuotes && stream[current] === "\\" && stream[current + 1] === '"')
+        current += 2;
       else {
         if (stream[current] === '"') inQuotes = !inQuotes;
-        if (inQuotes && stream[current + 1] === '`') current += 2;
-        else if (stream[current] === '\\' && (stream[current + 1] === '\\'
-                                              || stream[current + 1] === '`')) {
+        if (inQuotes && stream[current + 1] === "`") current += 2;
+        else if (
+          stream[current] === "\\" &&
+          (stream[current + 1] === "\\" || stream[current + 1] === "`")
+        ) {
           current += 2;
         } else {
           current += 1;
@@ -1199,7 +1307,7 @@ class Lexer {
       this._current = current;
     }
     let literalString = stream.slice(start, this._current).trimStart();
-    literalString = literalString.replaceAll('\\`', '`');
+    literalString = literalString.replaceAll("\\`", "`");
     if (_looksLikeJSON(literalString)) {
       literal = JSON.parse(literalString);
     } else {
@@ -1301,9 +1409,9 @@ class Parser {
     if (this._lookahead(0) !== TOK_EOF) {
       const t = this._lookaheadToken(0);
       const error = new Error(
-        `Unexpected token type: ${t.type}, value: ${t.value}`,
+        `Unexpected token type: ${t.type}, value: ${t.value}`
       );
-      error.name = 'ParserError';
+      error.name = "ParserError";
       throw error;
     }
     return ast;
@@ -1311,7 +1419,7 @@ class Parser {
   _loadTokens(expression, debug) {
     const lexer = new Lexer(this._allowedGlobalNames, debug);
     const tokens = lexer.tokenize(expression);
-    tokens.push({ type: TOK_EOF, value: '', start: expression.length });
+    tokens.push({ type: TOK_EOF, value: "", start: expression.length });
     this.tokens = tokens;
   }
   expression(rbp) {
@@ -1349,48 +1457,50 @@ class Parser {
     let args;
     switch (token.type) {
       case TOK_LITERAL:
-        return { type: 'Literal', value: token.value };
+        return { type: "Literal", value: token.value };
       case TOK_NUMBER:
-        return { type: 'Number', value: token.value };
+        return { type: "Number", value: token.value };
       case TOK_UNQUOTEDIDENTIFIER:
-        return { type: 'Field', name: token.value };
+        return { type: "Field", name: token.value };
       case TOK_QUOTEDIDENTIFIER:
-        node = { type: 'Field', name: token.value };
+        node = { type: "Field", name: token.value };
         if (this._lookahead(0) === TOK_LPAREN) {
-          throw new Error('Quoted identifier not allowed for function names.');
+          throw new Error("Quoted identifier not allowed for function names.");
         }
         return node;
       case TOK_NOT:
         right = this.expression(bindingPower.Not);
-        return { type: 'NotExpression', children: [right] };
+        return { type: "NotExpression", children: [right] };
       case TOK_UNARY_MINUS:
         right = this.expression(bindingPower.UnaryMinus);
-        return { type: 'UnaryMinusExpression', children: [right] };
+        return { type: "UnaryMinusExpression", children: [right] };
       case TOK_STAR:
-        left = { type: 'Identity' };
+        left = { type: "Identity" };
         if (this._lookahead(0) === TOK_RBRACKET) {
-          right = { type: 'Identity' };
+          right = { type: "Identity" };
         } else {
           right = this._parseProjectionRHS(bindingPower.Star);
         }
-        return { type: 'ValueProjection', children: [left, right] };
+        return { type: "ValueProjection", children: [left, right] };
       case TOK_FILTER:
-        return this.led(token.type, { type: 'Identity' });
+        return this.led(token.type, { type: "Identity" });
       case TOK_LBRACE:
         return this._parseMultiselectHash();
       case TOK_FLATTEN:
-        left = { type: TOK_FLATTEN, children: [{ type: 'Identity' }] };
+        left = { type: TOK_FLATTEN, children: [{ type: "Identity" }] };
         right = this._parseProjectionRHS(bindingPower.Flatten);
-        return { type: 'Projection', children: [left, right] };
+        return { type: "Projection", children: [left, right] };
       case TOK_LBRACKET:
-        if (this._lookahead(0) === TOK_STAR
-            && this._lookahead(1) === TOK_RBRACKET) {
+        if (
+          this._lookahead(0) === TOK_STAR &&
+          this._lookahead(1) === TOK_RBRACKET
+        ) {
           this._advance();
           this._advance();
           right = this._parseProjectionRHS(bindingPower.Star);
           return {
-            type: 'Projection',
-            children: [{ type: 'Identity' }, right],
+            type: "Projection",
+            children: [{ type: "Identity" }, right],
           };
         }
         return this._parseUnchainedIndexExpression();
@@ -1402,7 +1512,7 @@ class Parser {
         return { type: TOK_FIELD };
       case TOK_EXPREF:
         expression = this.expression(bindingPower.Expref);
-        return { type: 'ExpressionReference', children: [expression] };
+        return { type: "ExpressionReference", children: [expression] };
       case TOK_LPAREN:
         args = [];
         while (this._lookahead(0) !== TOK_RPAREN) {
@@ -1428,43 +1538,43 @@ class Parser {
     switch (tokenName) {
       case TOK_CONCATENATE:
         right = this.expression(bindingPower.Concatenate);
-        return { type: 'ConcatenateExpression', children: [left, right] };
+        return { type: "ConcatenateExpression", children: [left, right] };
       case TOK_DOT:
         rbp = bindingPower.Dot;
         if (this._lookahead(0) !== TOK_STAR) {
           right = this._parseDotRHS(rbp);
-          return { type: 'Subexpression', children: [left, right] };
+          return { type: "Subexpression", children: [left, right] };
         }
         this._advance();
         right = this._parseProjectionRHS(rbp);
-        return { type: 'ValueProjection', children: [left, right] };
+        return { type: "ValueProjection", children: [left, right] };
       case TOK_PIPE:
         right = this.expression(bindingPower.Pipe);
         return { type: TOK_PIPE, children: [left, right] };
       case TOK_OR:
         right = this.expression(bindingPower.Or);
-        return { type: 'OrExpression', children: [left, right] };
+        return { type: "OrExpression", children: [left, right] };
       case TOK_AND:
         right = this.expression(bindingPower.And);
-        return { type: 'AndExpression', children: [left, right] };
+        return { type: "AndExpression", children: [left, right] };
       case TOK_ADD:
         right = this.expression(bindingPower.Add);
-        return { type: 'AddExpression', children: [left, right] };
+        return { type: "AddExpression", children: [left, right] };
       case TOK_SUBTRACT:
         right = this.expression(bindingPower.Subtract);
-        return { type: 'SubtractExpression', children: [left, right] };
+        return { type: "SubtractExpression", children: [left, right] };
       case TOK_MULTIPLY:
         right = this.expression(bindingPower.Multiply);
-        return { type: 'MultiplyExpression', children: [left, right] };
+        return { type: "MultiplyExpression", children: [left, right] };
       case TOK_DIVIDE:
         right = this.expression(bindingPower.Divide);
-        return { type: 'DivideExpression', children: [left, right] };
+        return { type: "DivideExpression", children: [left, right] };
       case TOK_POWER:
         right = this.expression(bindingPower.Power);
-        return { type: 'PowerExpression', children: [left, right] };
+        return { type: "PowerExpression", children: [left, right] };
       case TOK_UNION:
         right = this.expression(bindingPower.Power);
-        return { type: 'UnionExpression', children: [left, right] };
+        return { type: "UnionExpression", children: [left, right] };
       case TOK_LPAREN:
         name = left.name;
         args = [];
@@ -1476,21 +1586,21 @@ class Parser {
           args.push(expression);
         }
         this._match(TOK_RPAREN);
-        node = { type: 'Function', name, children: args };
+        node = { type: "Function", name, children: args };
         return node;
       case TOK_FILTER:
         condition = this.expression(0);
         this._match(TOK_RBRACKET);
         if (this._lookahead(0) === TOK_FLATTEN) {
-          right = { type: 'Identity' };
+          right = { type: "Identity" };
         } else {
           right = this._parseProjectionRHS(bindingPower.Filter);
         }
-        return { type: 'FilterProjection', children: [left, right, condition] };
+        return { type: "FilterProjection", children: [left, right, condition] };
       case TOK_FLATTEN:
         leftNode = { type: TOK_FLATTEN, children: [left] };
         rightNode = this._parseProjectionRHS(bindingPower.Flatten);
-        return { type: 'Projection', children: [leftNode, rightNode] };
+        return { type: "Projection", children: [leftNode, rightNode] };
       case TOK_EQ:
       case TOK_NE:
       case TOK_GT:
@@ -1499,12 +1609,14 @@ class Parser {
       case TOK_LTE:
         return this._parseComparator(left, tokenName);
       case TOK_LBRACKET:
-        if (this._lookahead(0) === TOK_STAR
-            && this._lookahead(1) === TOK_RBRACKET) {
+        if (
+          this._lookahead(0) === TOK_STAR &&
+          this._lookahead(1) === TOK_RBRACKET
+        ) {
           this._advance();
           this._advance();
           right = this._parseProjectionRHS(bindingPower.Star);
-          return { type: 'Projection', children: [left, right] };
+          return { type: "Projection", children: [left, right] };
         }
         right = this._parseChainedIndexExpression();
         return this._projectIfSlice(left, right);
@@ -1518,15 +1630,13 @@ class Parser {
     } else {
       const t = this._lookaheadToken(0);
       const error = new Error(`Expected ${tokenType}, got: ${t.type}`);
-      error.name = 'ParserError';
+      error.name = "ParserError";
       throw error;
     }
   }
   _errorToken(token) {
-    const error = new Error(`Invalid token (${
-      token.type}): "${
-      token.value}"`);
-    error.name = 'ParserError';
+    const error = new Error(`Invalid token (${token.type}): "${token.value}"`);
+    error.name = "ParserError";
     throw error;
   }
   _parseChainedIndexExpression() {
@@ -1542,7 +1652,7 @@ class Parser {
     }
     this._match(TOK_RBRACKET);
     return {
-      type: 'Index',
+      type: "Index",
       value: first,
     };
   }
@@ -1551,7 +1661,7 @@ class Parser {
     const firstToken = this._lookahead(0);
     if (firstToken === TOK_COLON) {
       const right = this._parseSliceExpression();
-      return this._projectIfSlice({ type: 'Identity' }, right);
+      return this._projectIfSlice({ type: "Identity" }, right);
     }
     const first = this.expression(0);
     const currentToken = this._lookahead(0);
@@ -1562,12 +1672,12 @@ class Parser {
     if (currentToken === TOK_COLON) {
       this._setIndex(oldIndex);
       const right = this._parseSliceExpression();
-      return this._projectIfSlice({ type: 'Identity' }, right);
+      return this._projectIfSlice({ type: "Identity" }, right);
     }
     if (firstToken === TOK_NUMBER || firstToken === TOK_UNARY_MINUS) {
       this._match(TOK_RBRACKET);
       return {
-        type: 'Index',
+        type: "Index",
         value: first,
       };
     }
@@ -1575,10 +1685,10 @@ class Parser {
     return this._parseMultiselectList();
   }
   _projectIfSlice(left, right) {
-    const indexExpr = { type: 'IndexExpression', children: [left, right] };
-    if (right.type === 'Slice') {
+    const indexExpr = { type: "IndexExpression", children: [left, right] };
+    if (right.type === "Slice") {
       return {
-        type: 'Projection',
+        type: "Projection",
         children: [indexExpr, this._parseProjectionRHS(bindingPower.Star)],
       };
     }
@@ -1596,9 +1706,10 @@ class Parser {
         parts[index] = this.expression(0);
         const t = this._lookahead(0);
         if (t !== TOK_COLON && t !== TOK_RBRACKET) {
-          const error = new Error(`Syntax error, unexpected token: ${
-            t.value}(${t.type})`);
-          error.name = 'Parsererror';
+          const error = new Error(
+            `Syntax error, unexpected token: ${t.value}(${t.type})`
+          );
+          error.name = "Parsererror";
           throw error;
         }
       }
@@ -1606,13 +1717,13 @@ class Parser {
     }
     this._match(TOK_RBRACKET);
     return {
-      type: 'Slice',
+      type: "Slice",
       children: parts,
     };
   }
   _parseComparator(left, comparator) {
     const right = this.expression(bindingPower[comparator]);
-    return { type: 'Comparator', name: comparator, children: [left, right] };
+    return { type: "Comparator", name: comparator, children: [left, right] };
   }
   _parseDotRHS(rbp) {
     const lookahead = this._lookahead(0);
@@ -1632,7 +1743,7 @@ class Parser {
   _parseProjectionRHS(rbp) {
     let right;
     if (bindingPower[this._lookahead(0)] < 10) {
-      right = { type: 'Identity' };
+      right = { type: "Identity" };
     } else if (this._lookahead(0) === TOK_LBRACKET) {
       right = this.expression(rbp);
     } else if (this._lookahead(0) === TOK_FILTER) {
@@ -1642,9 +1753,10 @@ class Parser {
       right = this._parseDotRHS(rbp);
     } else {
       const t = this._lookaheadToken(0);
-      const error = new Error(`Sytanx error, unexpected token: ${
-        t.value}(${t.type})`);
-      error.name = 'ParserError';
+      const error = new Error(
+        `Sytanx error, unexpected token: ${t.value}(${t.type})`
+      );
+      error.name = "ParserError";
       throw error;
     }
     return right;
@@ -1657,33 +1769,34 @@ class Parser {
       if (this._lookahead(0) === TOK_COMMA) {
         this._match(TOK_COMMA);
         if (this._lookahead(0) === TOK_RBRACKET) {
-          throw new Error('Unexpected token Rbracket');
+          throw new Error("Unexpected token Rbracket");
         }
       }
     }
     this._match(TOK_RBRACKET);
-    return { type: 'MultiSelectList', children: expressions };
+    return { type: "MultiSelectList", children: expressions };
   }
   _parseMultiselectHash() {
     const pairs = [];
     const identifierTypes = [TOK_UNQUOTEDIDENTIFIER, TOK_QUOTEDIDENTIFIER];
-    let keyToken; let keyName; let value; let
-      node;
+    let keyToken;
+    let keyName;
+    let value;
+    let node;
     if (this._lookahead(0) === TOK_RBRACE) {
       this._advance();
-      return { type: 'MultiSelectHash', children: [] };
+      return { type: "MultiSelectHash", children: [] };
     }
     for (;;) {
       keyToken = this._lookaheadToken(0);
       if (identifierTypes.indexOf(keyToken.type) < 0) {
-        throw new Error(`Expecting an identifier token, got: ${
-          keyToken.type}`);
+        throw new Error(`Expecting an identifier token, got: ${keyToken.type}`);
       }
       keyName = keyToken.value;
       this._advance();
       this._match(TOK_COLON);
       value = this.expression(0);
-      node = { type: 'KeyValuePair', name: keyName, value };
+      node = { type: "KeyValuePair", name: keyName, value };
       pairs.push(node);
       if (this._lookahead(0) === TOK_COMMA) {
         this._match(TOK_COMMA);
@@ -1692,17 +1805,20 @@ class Parser {
         break;
       }
     }
-    return { type: 'MultiSelectHash', children: pairs };
+    return { type: "MultiSelectHash", children: pairs };
   }
 }
 
 function offsetMS(dateObj, timeZone) {
-  const tzOffset = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'longOffset' }).format(dateObj);
+  const tzOffset = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    timeZoneName: "longOffset",
+  }).format(dateObj);
   const offset = /GMT([+\-−])?(\d{1,2}):?(\d{0,2})?/.exec(tzOffset);
   if (!offset) return 0;
   const [sign, hours, minutes] = offset.slice(1);
-  const result = (((hours || 0) * 60) + 1 * (minutes || 0)) * 60 * 1000;
-  return sign === '-' ? result * -1 : result;
+  const result = ((hours || 0) * 60 + 1 * (minutes || 0)) * 60 * 1000;
+  return sign === "-" ? result * -1 : result;
 }
 function round(num, digits) {
   const precision = 10 ** digits;
@@ -1718,7 +1834,7 @@ function adjustTimeZone(dateObj, timeZone) {
     dateObj.getHours(),
     dateObj.getMinutes(),
     dateObj.getSeconds(),
-    dateObj.getMilliseconds(),
+    dateObj.getMilliseconds()
   );
   baseDate += offsetMS(dateObj, timeZone);
   return new Date(baseDate);
@@ -1726,9 +1842,9 @@ function adjustTimeZone(dateObj, timeZone) {
 function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
   return {
     and: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         let result = !!valueOf(resolvedArgs[0]);
-        resolvedArgs.slice(1).forEach(arg => {
+        resolvedArgs.slice(1).forEach((arg) => {
           result = result && !!valueOf(arg);
         });
         return result;
@@ -1738,46 +1854,48 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
     casefold: {
       _func: (args, _data, interpreter) => {
         const str = toString(args[0]);
-        return str.toLocaleUpperCase(interpreter.language).toLocaleLowerCase(interpreter.language);
+        return str
+          .toLocaleUpperCase(interpreter.language)
+          .toLocaleLowerCase(interpreter.language);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     datedif: {
-      _func: args => {
+      _func: (args) => {
         const d1 = toNumber(args[0]);
         const d2 = toNumber(args[1]);
         const unit = toString(args[2]).toLowerCase();
         if (d2 === d1) return 0;
         if (d2 < d1) return null;
-        if (unit === 'd') return Math.floor(d2 - d1);
+        if (unit === "d") return Math.floor(d2 - d1);
         const date1 = new Date(d1 * MS_IN_DAY);
         const date2 = new Date(d2 * MS_IN_DAY);
         const yearDiff = date2.getFullYear() - date1.getFullYear();
         let monthDiff = date2.getMonth() - date1.getMonth();
         const dayDiff = date2.getDate() - date1.getDate();
-        if (unit === 'y') {
+        if (unit === "y") {
           let y = yearDiff;
           if (monthDiff < 0) y -= 1;
           if (monthDiff === 0 && dayDiff < 0) y -= 1;
           return y;
         }
-        if (unit === 'm') {
+        if (unit === "m") {
           return yearDiff * 12 + monthDiff + (dayDiff < 0 ? -1 : 0);
         }
-        if (unit === 'ym') {
+        if (unit === "ym") {
           if (dayDiff < 0) monthDiff -= 1;
           if (monthDiff <= 0 && yearDiff > 0) return 12 + monthDiff;
           return monthDiff;
         }
-        if (unit === 'yd') {
+        if (unit === "yd") {
           if (dayDiff < 0) monthDiff -= 1;
           if (monthDiff < 0) date2.setFullYear(date1.getFullYear() + 1);
           else date2.setFullYear(date1.getFullYear());
           return Math.floor((date2.getTime() - date1.getTime()) / MS_IN_DAY);
         }
-        throw new TypeError(`Unrecognized unit parameter "${unit}" for datedif()`);
+        throw new TypeError(
+          `Unrecognized unit parameter "${unit}" for datedif()`
+        );
       },
       _signature: [
         { types: [dataTypes.TYPE_NUMBER] },
@@ -1786,7 +1904,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     datetime: {
-      _func: args => {
+      _func: (args) => {
         const year = toNumber(args[0]);
         const month = toNumber(args[1]);
         const day = toNumber(args[2]);
@@ -1795,7 +1913,15 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
         const seconds = args.length > 5 ? toNumber(args[5]) : 0;
         const ms = args.length > 6 ? toNumber(args[6]) : 0;
         const tz = args.length > 7 ? toString(args[7]) : null;
-        let jsDate = new Date(year, month - 1, day, hours, minutes, seconds, ms);
+        let jsDate = new Date(
+          year,
+          month - 1,
+          day,
+          hours,
+          minutes,
+          seconds,
+          ms
+        );
         if (tz) {
           jsDate = adjustTimeZone(jsDate, tz);
         }
@@ -1813,17 +1939,15 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     day: {
-      _func: args => {
+      _func: (args) => {
         const date = toNumber(args[0]);
         const jsDate = new Date(date * MS_IN_DAY);
         return jsDate.getDate();
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     deepScan: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const [source, n] = resolvedArgs;
         const name = n.toString();
         const items = [];
@@ -1831,19 +1955,25 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
         function scan(node) {
           Object.entries(node).forEach(([k, v]) => {
             if (k === name) items.push(v);
-            if (typeof v === 'object') scan(v);
+            if (typeof v === "object") scan(v);
           });
         }
         scan(source);
         return items;
       },
       _signature: [
-        { types: [dataTypes.TYPE_OBJECT, dataTypes.TYPE_ARRAY, dataTypes.TYPE_NULL] },
+        {
+          types: [
+            dataTypes.TYPE_OBJECT,
+            dataTypes.TYPE_ARRAY,
+            dataTypes.TYPE_NULL,
+          ],
+        },
         { types: [dataTypes.TYPE_STRING, dataTypes.TYPE_NUMBER] },
       ],
     },
     entries: {
-      _func: args => {
+      _func: (args) => {
         const obj = valueOf(args[0]);
         return Object.entries(obj);
       },
@@ -1860,11 +1990,15 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     eomonth: {
-      _func: args => {
+      _func: (args) => {
         const date = toNumber(args[0]);
         const months = toNumber(args[1]);
         const jsDate = new Date(date * MS_IN_DAY);
-        const newDate = new Date(jsDate.getFullYear(), jsDate.getMonth() + months + 1, 0);
+        const newDate = new Date(
+          jsDate.getFullYear(),
+          jsDate.getMonth() + months + 1,
+          0
+        );
         return newDate.getTime() / MS_IN_DAY;
       },
       _signature: [
@@ -1873,20 +2007,18 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     exp: {
-      _func: args => {
+      _func: (args) => {
         const value = toNumber(args[0]);
         return Math.exp(value);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     false: {
       _func: () => false,
       _signature: [],
     },
     find: {
-      _func: args => {
+      _func: (args) => {
         const query = toString(args[0]);
         const text = toString(args[1]);
         const startPos = args.length > 2 ? toNumber(args[2]) : 0;
@@ -1903,16 +2035,14 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     fromEntries: {
-      _func: args => {
+      _func: (args) => {
         const array = args[0];
         return Object.fromEntries(array);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_ARRAY_ARRAY] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_ARRAY_ARRAY] }],
     },
     hour: {
-      _func: args => {
+      _func: (args) => {
         const time = toNumber(args[0]) % 1;
         if (time < 0) {
           return null;
@@ -1920,9 +2050,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
         const hour = round(time * 24, 14);
         return Math.floor(hour % 24);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     if: {
       _func: (unresolvedArgs, data, interpreter) => {
@@ -1938,10 +2066,11 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       _signature: [
         { types: [dataTypes.TYPE_ANY] },
         { types: [dataTypes.TYPE_ANY] },
-        { types: [dataTypes.TYPE_ANY] }],
+        { types: [dataTypes.TYPE_ANY] },
+      ],
     },
     left: {
-      _func: args => {
+      _func: (args) => {
         const numEntries = args.length > 1 ? toNumber(args[1]) : 1;
         if (numEntries < 0) return null;
         if (args[0] instanceof Array) {
@@ -1956,16 +2085,14 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     lower: {
-      _func: args => {
+      _func: (args) => {
         const value = toString(args[0]);
         return value.toLowerCase();
       },
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     mid: {
-      _func: args => {
+      _func: (args) => {
         const startPos = toNumber(args[1]);
         const numEntries = toNumber(args[2]);
         if (startPos < 0) return null;
@@ -1982,7 +2109,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     minute: {
-      _func: args => {
+      _func: (args) => {
         const time = toNumber(args[0]) % 1;
         if (time < 0) {
           return null;
@@ -1990,12 +2117,10 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
         const minute = Math.round(time * 1440, 10);
         return Math.floor(minute % 60);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     mod: {
-      _func: args => {
+      _func: (args) => {
         const p1 = toNumber(args[0]);
         const p2 = toNumber(args[1]);
         return p1 % p2;
@@ -2006,17 +2131,15 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     month: {
-      _func: args => {
+      _func: (args) => {
         const date = toNumber(args[0]);
         const jsDate = new Date(date * MS_IN_DAY);
         return jsDate.getMonth() + 1;
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     not: {
-      _func: resolveArgs => !valueOf(resolveArgs[0]),
+      _func: (resolveArgs) => !valueOf(resolveArgs[0]),
       _signature: [{ types: [dataTypes.TYPE_ANY] }],
     },
     now: {
@@ -2028,9 +2151,9 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       _signature: [],
     },
     or: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         let result = !!valueOf(resolvedArgs[0]);
-        resolvedArgs.slice(1).forEach(arg => {
+        resolvedArgs.slice(1).forEach((arg) => {
           result = result || !!valueOf(arg);
         });
         return result;
@@ -2038,7 +2161,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       _signature: [{ types: [dataTypes.TYPE_ANY], variadic: true }],
     },
     power: {
-      _func: args => {
+      _func: (args) => {
         const base = toNumber(args[0]);
         const power = toNumber(args[1]);
         return base ** power;
@@ -2049,19 +2172,18 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     proper: {
-      _func: args => {
+      _func: (args) => {
         const text = toString(args[0]);
-        const words = text.split(' ');
-        const properWords = words.map(word => word.charAt(0).toUpperCase()
-            + word.slice(1).toLowerCase());
-        return properWords.join(' ');
+        const words = text.split(" ");
+        const properWords = words.map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        );
+        return properWords.join(" ");
       },
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     replace: {
-      _func: args => {
+      _func: (args) => {
         const oldText = toString(args[0]);
         const startNum = toNumber(args[1]);
         const numChars = toNumber(args[2]);
@@ -2081,7 +2203,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     rept: {
-      _func: args => {
+      _func: (args) => {
         const text = toString(args[0]);
         const count = toNumber(args[1]);
         if (count < 0) {
@@ -2095,7 +2217,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     right: {
-      _func: args => {
+      _func: (args) => {
         const numEntries = args.length > 1 ? toNumber(args[1]) : 1;
         if (numEntries < 0) return null;
         if (args[0] instanceof Array) {
@@ -2112,7 +2234,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     round: {
-      _func: args => {
+      _func: (args) => {
         const number = toNumber(args[0]);
         const digits = toNumber(args[1]);
         return round(number, digits);
@@ -2123,15 +2245,17 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     search: {
-      _func: args => {
+      _func: (args) => {
         const findText = toString(args[0]);
         const withinText = toString(args[1]);
         const startPos = toNumber(args[2]);
-        if (findText === null || withinText === null || withinText.length === 0) return [];
-        const reString = findText.replace(/([[.\\^$()+{])/g, '\\$1')
-          .replace(/~?\?/g, match => match === '~?' ? '\\?' : '.')
-          .replace(/~?\*/g, match => match === '~*' ? '\\*' : '.*?')
-          .replace(/~~/g, '~');
+        if (findText === null || withinText === null || withinText.length === 0)
+          return [];
+        const reString = findText
+          .replace(/([[.\\^$()+{])/g, "\\$1")
+          .replace(/~?\?/g, (match) => (match === "~?" ? "\\?" : "."))
+          .replace(/~?\*/g, (match) => (match === "~*" ? "\\*" : ".*?"))
+          .replace(/~~/g, "~");
         const re = new RegExp(reString);
         const result = withinText.substring(startPos).match(re);
         if (result === null) return [];
@@ -2144,7 +2268,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     second: {
-      _func: args => {
+      _func: (args) => {
         const time = toNumber(args[0]) % 1;
         if (time < 0) {
           return null;
@@ -2152,12 +2276,10 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
         const seconds = round(time * 86400, 10);
         return Math.floor(seconds % 60);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     split: {
-      _func: args => {
+      _func: (args) => {
         const str = toString(args[0]);
         const separator = toString(args[1]);
         return str.split(separator);
@@ -2168,57 +2290,54 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     sqrt: {
-      _func: args => {
+      _func: (args) => {
         const result = Math.sqrt(toNumber(args[0]));
         if (Number.isNaN(result)) {
           return null;
         }
         return result;
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     stdev: {
-      _func: args => {
+      _func: (args) => {
         const values = args[0] || [];
         if (values.length <= 1) {
           return null;
         }
-        const coercedValues = values.map(value => toNumber(value));
+        const coercedValues = values.map((value) => toNumber(value));
         const mean = coercedValues.reduce((a, b) => a + b, 0) / values.length;
         const sumSquare = coercedValues.reduce((a, b) => a + b * b, 0);
-        const result = Math.sqrt((sumSquare - values.length * mean * mean) / (values.length - 1));
+        const result = Math.sqrt(
+          (sumSquare - values.length * mean * mean) / (values.length - 1)
+        );
         if (Number.isNaN(result)) {
           return null;
         }
         return result;
       },
-      _signature: [
-        { types: [dataTypes.TYPE_ARRAY_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_ARRAY_NUMBER] }],
     },
     stdevp: {
-      _func: args => {
+      _func: (args) => {
         const values = args[0] || [];
         if (values.length === 0) {
           return null;
         }
-        const coercedValues = values.map(value => toNumber(value));
+        const coercedValues = values.map((value) => toNumber(value));
         const mean = coercedValues.reduce((a, b) => a + b, 0) / values.length;
-        const meanSumSquare = coercedValues.reduce((a, b) => a + b * b, 0) / values.length;
+        const meanSumSquare =
+          coercedValues.reduce((a, b) => a + b * b, 0) / values.length;
         const result = Math.sqrt(meanSumSquare - mean * mean);
         if (Number.isNaN(result)) {
           return null;
         }
         return result;
       },
-      _signature: [
-        { types: [dataTypes.TYPE_ARRAY_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_ARRAY_NUMBER] }],
     },
     substitute: {
-      _func: args => {
+      _func: (args) => {
         const src = toString(args[0]);
         const old = toString(args[1]);
         const replacement = toString(args[2]);
@@ -2242,7 +2361,7 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     time: {
-      _func: args => {
+      _func: (args) => {
         const hours = toNumber(args[0]);
         const minutes = toNumber(args[1]);
         const seconds = toNumber(args[2]);
@@ -2263,20 +2382,21 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       _signature: [],
     },
     trim: {
-      _func: args => {
+      _func: (args) => {
         const text = toString(args[0]);
-        return text.split(' ').filter(x => x).join(' ');
+        return text
+          .split(" ")
+          .filter((x) => x)
+          .join(" ");
       },
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     true: {
       _func: () => true,
       _signature: [],
     },
     trunc: {
-      _func: args => {
+      _func: (args) => {
         const number = toNumber(args[0]);
         const digits = args.length > 1 ? toNumber(args[1]) : 0;
         const method = number >= 0 ? Math.floor : Math.ceil;
@@ -2288,43 +2408,49 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     unique: {
-      _func: args => {
-        const valueArray = args[0].map(a => valueOf(a));
-        return args[0].filter((v, index) => valueArray.indexOf(valueOf(v)) === index);
+      _func: (args) => {
+        const valueArray = args[0].map((a) => valueOf(a));
+        return args[0].filter(
+          (v, index) => valueArray.indexOf(valueOf(v)) === index
+        );
       },
-      _signature: [
-        { types: [dataTypes.TYPE_ARRAY] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_ARRAY] }],
     },
     upper: {
-      _func: args => {
+      _func: (args) => {
         const value = toString(args[0]);
         return value.toUpperCase();
       },
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     value: {
-      _func: args => {
+      _func: (args) => {
         const obj = args[0] || {};
         const index = args[1];
         const result = obj[index];
         if (result === undefined) {
           debug.push(`Failed to find: '${index}'`);
-          const available = Object.keys(obj).map(a => `'${a}'`).toString();
+          const available = Object.keys(obj)
+            .map((a) => `'${a}'`)
+            .toString();
           if (available.length) debug.push(`Available fields: ${available}`);
           return null;
         }
         return result;
       },
       _signature: [
-        { types: [dataTypes.TYPE_OBJECT, dataTypes.TYPE_ARRAY, dataTypes.TYPE_NULL] },
+        {
+          types: [
+            dataTypes.TYPE_OBJECT,
+            dataTypes.TYPE_ARRAY,
+            dataTypes.TYPE_NULL,
+          ],
+        },
         { types: [dataTypes.TYPE_STRING, dataTypes.TYPE_NUMBER] },
       ],
     },
     weekday: {
-      _func: args => {
+      _func: (args) => {
         const date = toNumber(args[0]);
         const type = args.length > 1 ? toNumber(args[1]) : 1;
         const jsDate = new Date(date * MS_IN_DAY);
@@ -2346,62 +2472,48 @@ function openFormulaFunctions(valueOf, toString, toNumber, debug = []) {
       ],
     },
     year: {
-      _func: args => {
+      _func: (args) => {
         const date = toNumber(args[0]);
         const jsDate = new Date(date * MS_IN_DAY);
         return jsDate.getFullYear();
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     charCode: {
-      _func: args => {
+      _func: (args) => {
         const code = toNumber(args[0]);
         if (!Number.isInteger(code)) {
           return null;
         }
         return String.fromCharCode(code);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_NUMBER] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_NUMBER] }],
     },
     codePoint: {
-      _func: args => {
+      _func: (args) => {
         const text = toString(args[0]);
         if (text.length === 0) {
           return null;
         }
         return text.codePointAt(0);
       },
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     encodeUrlComponent: {
-      _func: args => encodeURIComponent(args[0]),
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _func: (args) => encodeURIComponent(args[0]),
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     encodeUrl: {
-      _func: args => encodeURI(args[0]),
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _func: (args) => encodeURI(args[0]),
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     decodeUrlComponent: {
-      _func: args => decodeURIComponent(args[0]),
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _func: (args) => decodeURIComponent(args[0]),
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
     decodeUrl: {
-      _func: args => decodeURI(args[0]),
-      _signature: [
-        { types: [dataTypes.TYPE_STRING] },
-      ],
+      _func: (args) => decodeURI(args[0]),
+      _signature: [{ types: [dataTypes.TYPE_STRING] }],
     },
   };
 }
@@ -2414,7 +2526,7 @@ function functions(
   getTypeName,
   valueOf,
   toString,
-  debug,
+  debug
 ) {
   const {
     TYPE_NUMBER,
@@ -2429,11 +2541,12 @@ function functions(
     TYPE_ARRAY_STRING,
   } = dataTypes;
   function createKeyFunction(exprefNode, allowedTypes) {
-    return x => {
+    return (x) => {
       const current = runtime.interpreter.visit(exprefNode, x);
       if (allowedTypes.indexOf(getTypeName(current)) < 0) {
-        const msg = `TypeError: expected one of ${allowedTypes
-        }, received ${getTypeName(current)}`;
+        const msg = `TypeError: expected one of ${allowedTypes}, received ${getTypeName(
+          current
+        )}`;
         throw new Error(msg);
       }
       return current;
@@ -2441,14 +2554,14 @@ function functions(
   }
   const functionMap = {
     abs: {
-      _func: resolvedArgs => Math.abs(resolvedArgs[0]),
+      _func: (resolvedArgs) => Math.abs(resolvedArgs[0]),
       _signature: [{ types: [TYPE_NUMBER] }],
     },
     avg: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         let sum = 0;
         const inputArray = resolvedArgs[0];
-        inputArray.forEach(a => {
+        inputArray.forEach((a) => {
           sum += a;
         });
         return sum / inputArray.length;
@@ -2456,46 +2569,45 @@ function functions(
       _signature: [{ types: [TYPE_ARRAY_NUMBER] }],
     },
     ceil: {
-      _func: resolvedArgs => Math.ceil(resolvedArgs[0]),
+      _func: (resolvedArgs) => Math.ceil(resolvedArgs[0]),
       _signature: [{ types: [TYPE_NUMBER] }],
     },
     contains: {
-      _func: resolvedArgs => valueOf(resolvedArgs[0]).indexOf(valueOf(resolvedArgs[1])) >= 0,
-      _signature: [{ types: [TYPE_STRING, TYPE_ARRAY] },
-        { types: [TYPE_ANY] }],
+      _func: (resolvedArgs) =>
+        valueOf(resolvedArgs[0]).indexOf(valueOf(resolvedArgs[1])) >= 0,
+      _signature: [{ types: [TYPE_STRING, TYPE_ARRAY] }, { types: [TYPE_ANY] }],
     },
     endsWith: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const searchStr = valueOf(resolvedArgs[0]);
         const suffix = valueOf(resolvedArgs[1]);
-        return searchStr.indexOf(suffix, searchStr.length - suffix.length) !== -1;
+        return (
+          searchStr.indexOf(suffix, searchStr.length - suffix.length) !== -1
+        );
       },
       _signature: [{ types: [TYPE_STRING] }, { types: [TYPE_STRING] }],
     },
     floor: {
-      _func: resolvedArgs => Math.floor(resolvedArgs[0]),
+      _func: (resolvedArgs) => Math.floor(resolvedArgs[0]),
       _signature: [{ types: [TYPE_NUMBER] }],
     },
     join: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const joinChar = resolvedArgs[0];
         const listJoin = resolvedArgs[1];
         return listJoin.join(joinChar);
       },
-      _signature: [
-        { types: [TYPE_STRING] },
-        { types: [TYPE_ARRAY_STRING] },
-      ],
+      _signature: [{ types: [TYPE_STRING] }, { types: [TYPE_ARRAY_STRING] }],
     },
     keys: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         if (resolvedArgs[0] === null) return [];
         return Object.keys(resolvedArgs[0]);
       },
       _signature: [{ types: [TYPE_ANY] }],
     },
     length: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const arg = valueOf(resolvedArgs[0]);
         if (isObject(arg)) return Object.keys(arg).length;
         return isArray(arg) ? arg.length : toString(arg).length;
@@ -2503,44 +2615,57 @@ function functions(
       _signature: [{ types: [TYPE_STRING, TYPE_ARRAY, TYPE_OBJECT] }],
     },
     map: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const exprefNode = resolvedArgs[0];
-        return resolvedArgs[1].map(arg => runtime.interpreter.visit(exprefNode, arg));
+        return resolvedArgs[1].map((arg) =>
+          runtime.interpreter.visit(exprefNode, arg)
+        );
       },
       _signature: [{ types: [TYPE_EXPREF] }, { types: [TYPE_ARRAY] }],
     },
     max: {
-      _func: args => {
+      _func: (args) => {
         const array = args.reduce((prev, cur) => {
           if (Array.isArray(cur)) prev.push(...cur);
           else prev.push(cur);
           return prev;
         }, []);
-        const first = array.find(r => r !== null);
+        const first = array.find((r) => r !== null);
         if (array.length === 0 || first === undefined) return null;
         const isNumber = getTypeName(first, true) === TYPE_NUMBER;
         const compare = isNumber
           ? (prev, cur) => {
-            const current = toNumber(cur);
-            return prev <= current ? current : prev;
-          }
+              const current = toNumber(cur);
+              return prev <= current ? current : prev;
+            }
           : (prev, cur) => {
-            const current = toString(cur);
-            return prev.localeCompare(current) === 1 ? prev : current;
-          };
-        return array.reduce(compare, isNumber ? toNumber(first) : toString(first));
+              const current = toString(cur);
+              return prev.localeCompare(current) === 1 ? prev : current;
+            };
+        return array.reduce(
+          compare,
+          isNumber ? toNumber(first) : toString(first)
+        );
       },
-      _signature: [{ types: [TYPE_ARRAY, TYPE_ARRAY_NUMBER, TYPE_ARRAY_STRING], variadic: true }],
+      _signature: [
+        {
+          types: [TYPE_ARRAY, TYPE_ARRAY_NUMBER, TYPE_ARRAY_STRING],
+          variadic: true,
+        },
+      ],
     },
     maxBy: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const exprefNode = resolvedArgs[1];
         const resolvedArray = resolvedArgs[0];
-        const keyFunction = createKeyFunction(exprefNode, [TYPE_NUMBER, TYPE_STRING]);
+        const keyFunction = createKeyFunction(exprefNode, [
+          TYPE_NUMBER,
+          TYPE_STRING,
+        ]);
         let maxNumber = -Infinity;
         let maxRecord;
         let current;
-        resolvedArray.forEach(arg => {
+        resolvedArray.forEach((arg) => {
           current = keyFunction(arg);
           if (current > maxNumber) {
             maxNumber = current;
@@ -2552,9 +2677,9 @@ function functions(
       _signature: [{ types: [TYPE_ARRAY] }, { types: [TYPE_EXPREF] }],
     },
     merge: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const merged = {};
-        resolvedArgs.forEach(current => {
+        resolvedArgs.forEach((current) => {
           Object.entries(current || {}).forEach(([key, value]) => {
             merged[key] = value;
           });
@@ -2564,37 +2689,48 @@ function functions(
       _signature: [{ types: [TYPE_OBJECT], variadic: true }],
     },
     min: {
-      _func: args => {
+      _func: (args) => {
         const array = args.reduce((prev, cur) => {
           if (Array.isArray(cur)) prev.push(...cur);
           else prev.push(cur);
           return prev;
         }, []);
-        const first = array.find(r => r !== null);
+        const first = array.find((r) => r !== null);
         if (array.length === 0 || first === undefined) return null;
         const isNumber = getTypeName(first, true) === TYPE_NUMBER;
         const compare = isNumber
           ? (prev, cur) => {
-            const current = toNumber(cur);
-            return prev <= current ? prev : current;
-          }
+              const current = toNumber(cur);
+              return prev <= current ? prev : current;
+            }
           : (prev, cur) => {
-            const current = toString(cur);
-            return prev.localeCompare(current) === 1 ? current : prev;
-          };
-        return array.reduce(compare, isNumber ? toNumber(first) : toString(first));
+              const current = toString(cur);
+              return prev.localeCompare(current) === 1 ? current : prev;
+            };
+        return array.reduce(
+          compare,
+          isNumber ? toNumber(first) : toString(first)
+        );
       },
-      _signature: [{ types: [TYPE_ARRAY, TYPE_ARRAY_NUMBER, TYPE_ARRAY_STRING], variadic: true }],
+      _signature: [
+        {
+          types: [TYPE_ARRAY, TYPE_ARRAY_NUMBER, TYPE_ARRAY_STRING],
+          variadic: true,
+        },
+      ],
     },
     minBy: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const exprefNode = resolvedArgs[1];
         const resolvedArray = resolvedArgs[0];
-        const keyFunction = createKeyFunction(exprefNode, [TYPE_NUMBER, TYPE_STRING]);
+        const keyFunction = createKeyFunction(exprefNode, [
+          TYPE_NUMBER,
+          TYPE_STRING,
+        ]);
         let minNumber = Infinity;
         let minRecord;
         let current;
-        resolvedArray.forEach(arg => {
+        resolvedArray.forEach((arg) => {
           current = keyFunction(arg);
           if (current < minNumber) {
             minNumber = current;
@@ -2606,17 +2742,22 @@ function functions(
       _signature: [{ types: [TYPE_ARRAY] }, { types: [TYPE_EXPREF] }],
     },
     notNull: {
-      _func: resolvedArgs => resolvedArgs.find(arg => getTypeName(arg) !== TYPE_NULL) || null,
+      _func: (resolvedArgs) =>
+        resolvedArgs.find((arg) => getTypeName(arg) !== TYPE_NULL) || null,
       _signature: [{ types: [TYPE_ANY], variadic: true }],
     },
     reduce: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const exprefNode = resolvedArgs[0];
         return resolvedArgs[1].reduce(
-          (accumulated, current, index, array) => runtime.interpreter.visit(exprefNode, {
-            accumulated, current, index, array,
-          }),
-          resolvedArgs.length === 3 ? resolvedArgs[2] : null,
+          (accumulated, current, index, array) =>
+            runtime.interpreter.visit(exprefNode, {
+              accumulated,
+              current,
+              index,
+              array,
+            }),
+          resolvedArgs.length === 3 ? resolvedArgs[2] : null
         );
       },
       _signature: [
@@ -2626,7 +2767,7 @@ function functions(
       ],
     },
     register: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const functionName = resolvedArgs[0];
         const exprefNode = resolvedArgs[1];
         if (functionMap[functionName]) {
@@ -2634,22 +2775,19 @@ function functions(
           return {};
         }
         functionMap[functionName] = {
-          _func: args => runtime.interpreter.visit(exprefNode, ...args),
+          _func: (args) => runtime.interpreter.visit(exprefNode, ...args),
           _signature: [{ types: [TYPE_ANY], optional: true }],
         };
         return {};
       },
-      _signature: [
-        { types: [TYPE_STRING] },
-        { types: [TYPE_EXPREF] },
-      ],
+      _signature: [{ types: [TYPE_STRING] }, { types: [TYPE_EXPREF] }],
     },
     reverse: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const originalStr = valueOf(resolvedArgs[0]);
         const typeName = getTypeName(originalStr);
         if (typeName === TYPE_STRING) {
-          let reversedStr = '';
+          let reversedStr = "";
           for (let i = originalStr.length - 1; i >= 0; i -= 1) {
             reversedStr += originalStr[i];
           }
@@ -2662,10 +2800,13 @@ function functions(
       _signature: [{ types: [TYPE_STRING, TYPE_ARRAY] }],
     },
     sort: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const sortedArray = resolvedArgs[0].slice(0);
         if (sortedArray.length > 0) {
-          const normalize = getTypeName(resolvedArgs[0][0]) === TYPE_NUMBER ? toNumber : toString;
+          const normalize =
+            getTypeName(resolvedArgs[0][0]) === TYPE_NUMBER
+              ? toNumber
+              : toString;
           sortedArray.sort((a, b) => {
             const va = normalize(a);
             const vb = normalize(b);
@@ -2676,20 +2817,22 @@ function functions(
         }
         return sortedArray;
       },
-      _signature: [{ types: [TYPE_ARRAY, TYPE_ARRAY_STRING, TYPE_ARRAY_NUMBER] }],
+      _signature: [
+        { types: [TYPE_ARRAY, TYPE_ARRAY_STRING, TYPE_ARRAY_NUMBER] },
+      ],
     },
     sortBy: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const sortedArray = resolvedArgs[0].slice(0);
         if (sortedArray.length === 0) {
           return sortedArray;
         }
         const exprefNode = resolvedArgs[1];
         const requiredType = getTypeName(
-          runtime.interpreter.visit(exprefNode, sortedArray[0]),
+          runtime.interpreter.visit(exprefNode, sortedArray[0])
         );
         if ([TYPE_NUMBER, TYPE_STRING].indexOf(requiredType) < 0) {
-          throw new Error('TypeError');
+          throw new Error("TypeError");
         }
         const decorated = [];
         for (let i = 0; i < sortedArray.length; i += 1) {
@@ -2700,13 +2843,15 @@ function functions(
           const exprB = runtime.interpreter.visit(exprefNode, b[1]);
           if (getTypeName(exprA) !== requiredType) {
             throw new Error(
-              `TypeError: expected ${requiredType}, received ${
-                getTypeName(exprA)}`,
+              `TypeError: expected ${requiredType}, received ${getTypeName(
+                exprA
+              )}`
             );
           } else if (getTypeName(exprB) !== requiredType) {
             throw new Error(
-              `TypeError: expected ${requiredType}, received ${
-                getTypeName(exprB)}`,
+              `TypeError: expected ${requiredType}, received ${getTypeName(
+                exprB
+              )}`
             );
           }
           if (exprA > exprB) {
@@ -2725,13 +2870,14 @@ function functions(
       _signature: [{ types: [TYPE_ARRAY] }, { types: [TYPE_EXPREF] }],
     },
     startsWith: {
-      _func: resolvedArgs => valueOf(resolvedArgs[0]).startsWith(valueOf(resolvedArgs[1])),
+      _func: (resolvedArgs) =>
+        valueOf(resolvedArgs[0]).startsWith(valueOf(resolvedArgs[1])),
       _signature: [{ types: [TYPE_STRING] }, { types: [TYPE_STRING] }],
     },
     sum: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         let sum = 0;
-        resolvedArgs[0].forEach(arg => {
+        resolvedArgs[0].forEach((arg) => {
           sum += arg * 1;
         });
         return sum;
@@ -2739,7 +2885,7 @@ function functions(
       _signature: [{ types: [TYPE_ARRAY_NUMBER] }],
     },
     toArray: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         if (getTypeName(resolvedArgs[0]) === TYPE_ARRAY) {
           return resolvedArgs[0];
         }
@@ -2748,7 +2894,7 @@ function functions(
       _signature: [{ types: [TYPE_ANY] }],
     },
     toNumber: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const typeName = getTypeName(resolvedArgs[0]);
         if (typeName === TYPE_NUMBER) {
           return resolvedArgs[0];
@@ -2761,7 +2907,7 @@ function functions(
       _signature: [{ types: [TYPE_ANY] }],
     },
     toString: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         if (getTypeName(resolvedArgs[0]) === TYPE_STRING) {
           return resolvedArgs[0];
         }
@@ -2770,19 +2916,20 @@ function functions(
       _signature: [{ types: [TYPE_ANY] }],
     },
     type: {
-      _func: resolvedArgs => ({
-        [TYPE_NUMBER]: 'number',
-        [TYPE_STRING]: 'string',
-        [TYPE_ARRAY]: 'array',
-        [TYPE_OBJECT]: 'object',
-        [TYPE_BOOLEAN]: 'boolean',
-        [TYPE_EXPREF]: 'expref',
-        [TYPE_NULL]: 'null',
-      }[getTypeName(resolvedArgs[0])]),
+      _func: (resolvedArgs) =>
+        ({
+          [TYPE_NUMBER]: "number",
+          [TYPE_STRING]: "string",
+          [TYPE_ARRAY]: "array",
+          [TYPE_OBJECT]: "object",
+          [TYPE_BOOLEAN]: "boolean",
+          [TYPE_EXPREF]: "expref",
+          [TYPE_NULL]: "null",
+        }[getTypeName(resolvedArgs[0])]),
       _signature: [{ types: [TYPE_ANY] }],
     },
     values: {
-      _func: resolvedArgs => {
+      _func: (resolvedArgs) => {
         const arg = valueOf(resolvedArgs[0]);
         if (arg === null) return [];
         return Object.values(arg);
@@ -2790,12 +2937,15 @@ function functions(
       _signature: [{ types: [TYPE_ANY] }],
     },
     zip: {
-      _func: args => {
-        const count = args.reduce((min, current) => Math.min(min, current.length), args[0].length);
+      _func: (args) => {
+        const count = args.reduce(
+          (min, current) => Math.min(min, current.length),
+          args[0].length
+        );
         const result = new Array(count);
         for (let i = 0; i < count; i += 1) {
           result[i] = [];
-          args.forEach(a => {
+          args.forEach((a) => {
             result[i].push(a[i]);
           });
         }
@@ -2807,38 +2957,35 @@ function functions(
   return functionMap;
 }
 
-const {
-  TYPE_CLASS,
-  TYPE_ANY,
-} = dataTypes;
+const { TYPE_CLASS, TYPE_ANY } = dataTypes;
 function getToNumber(stringToNumber, debug = []) {
-  return value => {
+  return (value) => {
     const n = getValueOf(value);
     if (n === null) return null;
     if (n instanceof Array) {
-      debug.push('Converted array to zero');
+      debug.push("Converted array to zero");
       return 0;
     }
     const type = typeof n;
-    if (type === 'number') return n;
-    if (type === 'string') return stringToNumber(n, debug);
-    if (type === 'boolean') return n ? 1 : 0;
-    debug.push('Converted object to zero');
+    if (type === "number") return n;
+    if (type === "string") return stringToNumber(n, debug);
+    if (type === "boolean") return n ? 1 : 0;
+    debug.push("Converted object to zero");
     return 0;
   };
 }
 function toString(a) {
-  if (a === null || a === undefined) return '';
+  if (a === null || a === undefined) return "";
   return a.toString();
 }
-const defaultStringToNumber = (str => {
+const defaultStringToNumber = (str) => {
   const n = +str;
   return Number.isNaN(n) ? 0 : n;
-});
+};
 function isClass(obj) {
   if (obj === null) return false;
   if (Array.isArray(obj)) return false;
-  return obj.constructor.name !== 'Object';
+  return obj.constructor.name !== "Object";
 }
 function matchClass(arg, expectedList) {
   return expectedList.includes(TYPE_CLASS) && isClass(arg);
@@ -2855,10 +3002,10 @@ class Runtime {
       getTypeName,
       getValueOf,
       toString,
-      debug,
+      debug
     );
     Object.entries(
-      openFormulaFunctions(getValueOf, toString, toNumber, debug),
+      openFormulaFunctions(getValueOf, toString, toNumber, debug)
     ).forEach(([fname, func]) => {
       this.functionTable[fname] = func;
     });
@@ -2871,19 +3018,21 @@ class Runtime {
       return;
     }
     let pluralized;
-    const argsNeeded = signature.filter(arg => !arg.optional).length;
+    const argsNeeded = signature.filter((arg) => !arg.optional).length;
     if (signature[signature.length - 1].variadic) {
       if (args.length < signature.length) {
-        pluralized = signature.length === 1 ? ' argument' : ' arguments';
-        throw new Error(`ArgumentError: ${argName}() `
-        + `takes at least${signature.length}${pluralized
-        } but received ${args.length}`);
+        pluralized = signature.length === 1 ? " argument" : " arguments";
+        throw new Error(
+          `ArgumentError: ${argName}() ` +
+            `takes at least${signature.length}${pluralized} but received ${args.length}`
+        );
       }
     } else if (args.length < argsNeeded || args.length > signature.length) {
-      pluralized = signature.length === 1 ? ' argument' : ' arguments';
-      throw new Error(`ArgumentError: ${argName}() `
-      + `takes ${signature.length}${pluralized
-      } but received ${args.length}`);
+      pluralized = signature.length === 1 ? " argument" : " arguments";
+      throw new Error(
+        `ArgumentError: ${argName}() ` +
+          `takes ${signature.length}${pluralized} but received ${args.length}`
+      );
     }
     if (!bResolved) return;
     let currentSpec;
@@ -2891,14 +3040,25 @@ class Runtime {
     const limit = Math.min(signature.length, args.length);
     for (let i = 0; i < limit; i += 1) {
       currentSpec = signature[i].types;
-      if (!matchClass(args[i], currentSpec) && !currentSpec.includes(TYPE_ANY)) {
+      if (
+        !matchClass(args[i], currentSpec) &&
+        !currentSpec.includes(TYPE_ANY)
+      ) {
         actualType = getTypeNames(args[i]);
-        args[i] = matchType(actualType, currentSpec, args[i], argName, this.toNumber, toString);
+        args[i] = matchType(
+          actualType,
+          currentSpec,
+          args[i],
+          argName,
+          this.toNumber,
+          toString
+        );
       }
     }
   }
   callFunction(name, resolvedArgs, data, interpreter, bResolved = true) {
-    if (!Object.prototype.hasOwnProperty.call(this.functionTable, name)) throw new Error(`Unknown function: ${name}()`);
+    if (!Object.prototype.hasOwnProperty.call(this.functionTable, name))
+      throw new Error(`Unknown function: ${name}()`);
     const functionEntry = this.functionTable[name];
     this._validateArgs(name, resolvedArgs, functionEntry._signature, bResolved);
     return functionEntry._func.call(this, resolvedArgs, data, interpreter);
@@ -2907,7 +3067,10 @@ class Runtime {
 class Formula {
   constructor(debug, customFunctions, stringToNumberFn) {
     this.debug = debug;
-    this.toNumber = getToNumber(stringToNumberFn || defaultStringToNumber, debug);
+    this.toNumber = getToNumber(
+      stringToNumberFn || defaultStringToNumber,
+      debug
+    );
     this.runtime = new Runtime(debug, this.toNumber, customFunctions);
   }
   compile(stream, allowedGlobalNames = []) {
@@ -2921,14 +3084,14 @@ class Formula {
     }
     return ast;
   }
-  search(node, data, globals = {}, language = 'en-US') {
+  search(node, data, globals = {}, language = "en-US") {
     this.runtime.interpreter = new TreeInterpreter(
       this.runtime,
       globals,
       this.toNumber,
       toString,
       this.debug,
-      language,
+      language
     );
     try {
       return this.runtime.interpreter.search(node, data);
@@ -2940,27 +3103,18 @@ class Formula {
 }
 
 class JsonFormula {
-  constructor(
-    customFunctions = {},
-    stringToNumber = null,
-    debug = [],
-  ) {
+  constructor(customFunctions = {}, stringToNumber = null, debug = []) {
     this.customFunctions = { ...customFunctions };
     this.stringToNumber = stringToNumber;
     this.debug = debug;
     this.formula = new Formula(debug, customFunctions, stringToNumber);
   }
-  search(expression, json, globals = {}, language = 'en-US') {
+  search(expression, json, globals = {}, language = "en-US") {
     const ast = this.compile(expression, Object.keys(globals));
     return this.run(ast, json, language, globals);
   }
   run(ast, json, language, globals) {
-    return this.formula.search(
-      ast,
-      json,
-      globals,
-      language,
-    );
+    return this.formula.search(ast, json, globals, language);
   }
   compile(expression, allowedGlobalNames = []) {
     this.debug.length = 0;
@@ -2974,10 +3128,14 @@ function jsonFormula(
   customFunctions = {},
   stringToNumber = null,
   debug = [],
-  language = 'en-US',
+  language = "en-US"
 ) {
-  return new JsonFormula(customFunctions, stringToNumber, debug)
-    .search(expression, json, globals, language);
+  return new JsonFormula(customFunctions, stringToNumber, debug).search(
+    expression,
+    json,
+    globals,
+    language
+  );
 }
 
 export { JsonFormula as default, jsonFormula };

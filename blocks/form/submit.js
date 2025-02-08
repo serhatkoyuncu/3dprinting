@@ -1,3 +1,7 @@
+/* eslint-disable quotes */
+/* eslint-disable operator-linebreak */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
 import {
   DEFAULT_THANK_YOU_MESSAGE,
   getRouting,

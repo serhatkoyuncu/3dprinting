@@ -1,3 +1,9 @@
+/* eslint-disable quotes */
+/* eslint-disable indent */
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable operator-linebreak */
+/* eslint-disable comma-dangle */
 import { updateOrCreateInvalidMsg, stripTags } from "../../util.js";
 import {
   fileAttachmentText,

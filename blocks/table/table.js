@@ -3,7 +3,7 @@
  * Recreate a table
  * https://www.hlx.live/developer/block-collection/table
  */
-
+/* eslint-disable quotes */
 function buildCell(rowIndex) {
   const cell = rowIndex
     ? document.createElement("td")
