@@ -14,6 +14,7 @@ function updateActiveSlide(slide) {
         link.setAttribute("tabindex", "-1");
       } else {
         link.removeAttribute("tabindex");
+        s;
       }
     });
   });
